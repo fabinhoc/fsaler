@@ -18,6 +18,6 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function(NotFoundHttpException $exception) {
-            return ApiResponse::success('Resource not found', [] ,404);
+            return response()->json(['data' => '', 'message'=> 'Resource not found'], 404);
         });
     })->create();

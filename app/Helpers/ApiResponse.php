@@ -9,7 +9,6 @@ class ApiResponse
     public static function success(string $message, array | object $data = [], $code = 200)
     {
         return response()->json([
-            'success' => true,
             'message' => $message,
             'data' => $data,
         ], $code);
@@ -17,10 +16,6 @@ class ApiResponse
 
     public static function error(string $message, int $code, array $data = [])
     {
-        return response()->json([
-            'success'=> false,
-            'message'=> $message,
-            'data' => $data], $code
-        );
+        return response()->json(['data' => $data, 'message'=> $message], $code);
     }
 }
