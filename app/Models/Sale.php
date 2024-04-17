@@ -21,6 +21,11 @@ class Sale extends Model
         'description',
     ];
 
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
+
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);

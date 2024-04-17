@@ -16,4 +16,9 @@ class Client extends Model
         'phone_number',
         'description'
     ];
+
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 }
