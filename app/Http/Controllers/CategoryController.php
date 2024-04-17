@@ -14,8 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return (new CategoryCollection(Category::all()))
-            ->additional(['message' => 'Resource successfully completed']);
+        return new CategoryCollection(Category::all());
     }
 
     /**
@@ -32,8 +31,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return (new CategoryResource(Category::findOrFail($category->id)))
-            ->additional(['message' => 'Resource successfully completed']);
+        return new CategoryResource(Category::findOrFail($category->id));
     }
 
     /**

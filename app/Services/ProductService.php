@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Inventory;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductService
 {
@@ -25,9 +26,12 @@ class ProductService
     public function update(UpdateProductRequest $request, $uuid)
     {
         $product = Product::where('uuid', $uuid)->with('inventory')->first();
-        $product->update($request->validated());
-        $product->inventory->update($request->only('quantity'));
-        $product->save();
+        if (!$product) {
+            throw new NotFoundHttpException;
+        }
+        $payload = $request->except('quantity');
+        $product->update($payload);
+        $product->inventory()->update($request->only('quantity'));
 
         return $product;
     }

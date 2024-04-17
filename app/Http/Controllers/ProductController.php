@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ApiResponse;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Models\Inventory;
+use App\Http\Resources\ProductCollection;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Services\ProductService;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductController extends Controller
 {
@@ -19,10 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ApiResponse::success(
-            'Resource successfully found',
-            Product::with('inventory')->with('category')->paginate()
-        );
+        return new ProductCollection(Product::with('category')->paginate());
     }
 
     /**
@@ -30,7 +28,8 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        return ApiResponse::success('Resource successfully saved', $this->service->create($request));
+        return (new ProductResource($this->service->create($request)))
+            ->additional(['message'=> 'Resource successfully created']);
     }
 
     /**
@@ -38,9 +37,10 @@ class ProductController extends Controller
      */
     public function show(string $uuid)
     {
-        return ApiResponse::success(
-            'Resource successfully found',
-            Product::where('uuid' , $uuid)->with('inventory')->with('category')->firstOrFail()
+        return new ProductResource(Product::where('uuid' , $uuid)
+            ->with('inventory')
+            ->with('category')
+            ->firstOrFail()
         );
     }
 
@@ -50,10 +50,7 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, $uuid)
     {
         $response = $this->service->update($request, $uuid);
-        return ApiResponse::success(
-            'Resource successfully updated',
-            $response
-        );
+        return (new ProductResource($response))->additional(['message' => 'Resource successfully updated']);
     }
 
     /**
@@ -62,9 +59,9 @@ class ProductController extends Controller
     public function destroy(string $uuid)
     {
         if (!Product::where('uuid', $uuid)->delete()) {
-            return ApiResponse::error('Resource not found', 404);
+            throw new NotFoundHttpException;
         }
 
-        return ApiResponse::success('Resource successfully removed', []);
+        return response()->json([], 204);
     }
 }
