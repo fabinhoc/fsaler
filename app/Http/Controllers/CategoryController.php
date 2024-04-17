@@ -20,15 +20,15 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        return ApiResponse::success('Resource successfully created', Category::create($request->all()));
+        return ApiResponse::success('Resource successfully created', Category::create($request->validated()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(CategoryRequest $category)
+    public function show(Category $category)
     {
         return ApiResponse::success('Resource successfully founded', Category::findOrFail($category->id));
     }
@@ -38,7 +38,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, int $id)
     {
-        $response = tap(Category::findOrFail($id))->update($request->all());
+        $response = tap(Category::findOrFail($id))->update($request->validated());
         return ApiResponse::success('Resource successfully updated', $response);
     }
 

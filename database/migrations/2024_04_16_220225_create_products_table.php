@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('name');
+            $table->string('ean')->nullable();
             $table->decimal('cost_price', 15,2)->nullable()->default(0);
             $table->decimal('price', 15,2)->default(0);
             $table->date('purchase_date')->nullable();
+            $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
