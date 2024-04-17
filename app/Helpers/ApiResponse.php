@@ -2,9 +2,11 @@
 
 namespace App\Helpers;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class ApiResponse
 {
-    public static function success(string $message, array $data = [], $code = 200)
+    public static function success(string $message, array | object $data = [], $code = 200)
     {
         return response()->json([
             'success' => true,
