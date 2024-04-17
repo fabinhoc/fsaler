@@ -18,7 +18,10 @@ class AuthController extends Controller
     {
         try {
             $response = $this->service->login($request);
-            return ApiResponse::success('Login Successful', [$response['token'], $response['user']]);
+            return ApiResponse::success('Login Successful', [
+                'token' => $response['token'],
+                'user' => $response['user']]
+            );
         } catch (AuthenticationException $exception) {
             return ApiResponse::error($exception->getMessage(), 401);
         }
