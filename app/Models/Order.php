@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\SaleStatusEnum;
+use App\Enums\OrderStatusEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Sale extends Model
+class Order extends Model
 {
     use HasFactory, HasUuids;
 
@@ -16,15 +16,16 @@ class Sale extends Model
         'client_id',
         'payment_type_id',
         'payment_date',
-        'is_paid',
         'total',
+        'discount',
         'total_paid',
+        'is_paid',
         'description',
         'status',
     ];
 
     protected $casts = [
-        'status' => SaleStatusEnum::class
+        'status' => OrderStatusEnum::class
     ];
 
     public function uniqueIds(): array
