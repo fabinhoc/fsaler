@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\SaleStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->decimal('total')->default(0);
             $table->decimal('total_paid')->nullable()->default(0);
             $table->text('description')->nullable();
+            $table->string('status')->default(SaleStatusEnum::AWAITING_CONFIRMATION);
             $table->timestamps();
         });
     }

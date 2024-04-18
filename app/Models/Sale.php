@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SaleStatusEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,11 @@ class Sale extends Model
         'total',
         'total_paid',
         'description',
+        'status',
+    ];
+
+    protected $casts = [
+        'status' => SaleStatusEnum::class
     ];
 
     public function uniqueIds(): array
