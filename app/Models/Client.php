@@ -13,6 +13,7 @@ class Client extends Model
 
     protected $fillable = [
         'name',
+        'uuid',
         'phone_number',
         'description'
     ];
