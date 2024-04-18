@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return new ProductCollection(Product::with('category')->paginate());
+        return new ProductCollection(Product::with('category')->with('inventory')->paginate());
     }
 
     /**
