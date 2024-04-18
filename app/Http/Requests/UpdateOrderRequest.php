@@ -6,7 +6,7 @@ use App\Enums\OrderStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateSaleRequest extends FormRequest
+class UpdateOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,6 +36,7 @@ class UpdateSaleRequest extends FormRequest
             'status' => [Rule::enum(OrderStatusEnum::class)],
             'products' => 'sometimes|required|array',
             'products.*.product_id' => 'sometimes|integer|required|exists:products,id',
+            'products.*.price' => 'sometimes|required|decimal:0,2',
             'products.*.quantity' => 'sometimes|integer|required|min:1',
         ];
     }
