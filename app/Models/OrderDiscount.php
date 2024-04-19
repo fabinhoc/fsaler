@@ -2,26 +2,24 @@
 
 namespace App\Models;
 
+use App\Enums\OrderDiscountTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class OrderProduct extends Model
+class OrderDiscount extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'order_id',
-        'product_id',
-        'price',
-        'quantity'
+        'discount_type',
+        'discount'
     ];
 
-    public function products(): HasMany
-    {
-        return $this->hasMany(Product::class);
-    }
+    protected $casts = [
+        'discount_type' => OrderDiscountTypeEnum::class,
+    ];
 
     public function order(): BelongsTo
     {

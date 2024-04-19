@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            User::factory()->create([
-                'name' => 'Fabio Cruz',
-                'email' => 'fabio.cruz@gmail.com',
-                'password' => Hash::make('password')
-            ]),
+            // User::factory()->create([
+            //     'name' => 'Fabio Cruz',
+            //     'email' => 'fabio.cruz@gmail.com',
+            //     'password' => Hash::make('password')
+            // ]),
             PaymentType::class,
         ]);
     }

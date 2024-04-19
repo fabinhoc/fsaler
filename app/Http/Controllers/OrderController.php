@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
-use Illuminate\Http\Request;
+use App\Services\OrderService;
 
 class OrderController extends Controller
 {
+    public function __construct(private OrderService $service)
+    {}
     /**
      * Display a listing of the resource.
      */
@@ -23,7 +26,12 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        try {
+            return (new OrderResource($this->service->create($request->validated())))
+                ->additional(['message'=> 'Resource successfully created']);
+        } catch (\Exception $e) {
+            return response()->json(['message'=> $e->getMessage()], $e->getCode());
+        }
     }
 
     /**
@@ -40,8 +48,13 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateOrderRequest $request, string $uuid)
     {
-        //
+        try {
+            return (new OrderResource($this->service->update($request->validated(), $uuid)))
+                ->additional(['message'=> 'Resource successfully created']);
+        } catch (\Exception $e) {
+            return response()->json(['message'=> $e->getMessage()], $e->getCode());
+        }
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
@@ -18,7 +19,6 @@ class Order extends Model
         'payment_type_id',
         'payment_date',
         'total',
-        'discount',
         'total_paid',
         'is_paid',
         'description',
@@ -44,8 +44,13 @@ class Order extends Model
         return $this->belongsTo(PaymentType::class);
     }
 
-    public function orderProduct(): HasOne
+    public function orderProducts(): HasMany
     {
-        return $this->hasOne(OrderProduct::class);
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    public function orderDiscount(): HasOne
+    {
+        return $this->hasOne(OrderDiscount::class);
     }
 }

@@ -15,12 +15,13 @@ class OrderResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'uuid' => $this->uuid,
             'client' => new ClientResource($this->whenLoaded('client')),
             'payment_type_id' => $this->payment_type_id,
             'payment_date' => $this->payment_date,
             'total' => $this->total,
-            'discount' => $this->discount,
-            'products' => $this->orderProduct,
+            'order_discount' => $this->orderDiscount,
+            'products' => $this->orderProducts,
             'total_paid' => $this->total_paid,
             'is_paid' => $this->is_paid,
             'description' => $this->description,
