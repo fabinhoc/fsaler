@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,5 @@ Route::apiResource('orders', OrderController::class)->middleware('auth:sanctum')
 Route::get('orders/{uuid}', [OrderController::class,'show'])->middleware('auth:sanctum');
 Route::put('orders/{uuid}', [OrderController::class,'update'])->middleware('auth:sanctum');
 Route::delete('orders/{uuid}', [OrderController::class,'destroy'])->middleware('auth:sanctum');
+
+Route::post('product-images', [ProductImageController::class, 'uploadImage'])->middleware('auth:sanctum');

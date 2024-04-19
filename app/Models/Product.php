@@ -37,4 +37,9 @@ class Product extends Model
     {
         return $this->hasOne(Inventory::class);
     }
+
+    public function productImage(): HasOne
+    {
+        return $this->hasOne(ProductImage::class);
+    }
 }
