@@ -6,6 +6,7 @@ use App\Http\Requests\UploadProductImageRequest;
 use App\Http\Resources\ProductImageResource;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class ProductImageController extends Controller
 {
@@ -19,6 +20,7 @@ class ProductImageController extends Controller
         if ($productImage) {
             Storage::disk('s3')->delete($productImage->image_path);
         }
+
 
         $path = $request->file("image")->store('products');
         $productImage->product_id = $request->product_id;
