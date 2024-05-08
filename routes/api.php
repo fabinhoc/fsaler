@@ -28,4 +28,4 @@ Route::get('orders/{uuid}', [OrderController::class,'show'])->middleware('auth:s
 Route::put('orders/{uuid}', [OrderController::class,'update'])->middleware('auth:sanctum');
 Route::delete('orders/{uuid}', [OrderController::class,'destroy'])->middleware('auth:sanctum');
 
-Route::post('product-images', [ProductImageController::class, 'uploadImage'])->middleware(['auth:sanctum', 'optimizeImages']);
+Route::post('products/product-images', [ProductImageController::class, 'uploadImage'])->middleware(['auth:sanctum', 'optimizeImages']);

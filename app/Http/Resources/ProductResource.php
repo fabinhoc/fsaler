@@ -25,7 +25,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'category' => new CategoryResource($this->whenLoaded('category')),
             'inventory' => new InventoryResource($this->whenLoaded('inventory')),
-            'image' => $this->productImage->image_path,
+            'image' => $this->productImage->image_path ?? null,
             'created_at' => $this->created_at,
             'updated_at'=> $this->updated_at,
         ];
