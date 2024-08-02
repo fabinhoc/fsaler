@@ -8,6 +8,7 @@ use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductController extends Controller
@@ -18,9 +19,16 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new ProductCollection(Product::with('category')->with('inventory')->paginate());
+        $per_page = (isset($request->per_page)) ? $request->per_page : (int) config('pagination.items_per_page');
+        $column = (isset($request->sortBy) && !empty($request->sortBy)) ? $request->sortBy : 'id';
+        $direction = (isset($request->sortDesc) && filter_var($request->sortDesc, FILTER_VALIDATE_BOOLEAN)) ? 'DESC' : 'ASC';
+        return new ProductCollection(Product::with('category')
+            ->with('inventory')
+            ->orderBy($column, $direction)
+            ->paginate($per_page)
+        );
     }
 
     /**
@@ -63,5 +71,14 @@ class ProductController extends Controller
         }
 
         return response()->json([], 204);
+    }
+
+    public function findByEan(string $ean)
+    {
+        return new ProductResource(Product::where('ean' , $ean)
+            ->with('inventory')
+            ->with('category')
+            ->firstOrFail()
+    )   ;
     }
 }

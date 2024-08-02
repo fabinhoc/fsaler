@@ -17,6 +17,7 @@ Route::apiResource('products', ProductController::class)->middleware('auth:sanct
 Route::get('products/{uuid}', [ProductController::class,'show'])->middleware('auth:sanctum');
 Route::put('products/{uuid}', [ProductController::class,'update'])->middleware('auth:sanctum');
 Route::delete('products/{uuid}', [ProductController::class,'destroy'])->middleware('auth:sanctum');
+Route::get('products/find-by-ean/{ean}', [ProductController::class, 'findByEan'])->middleware(['auth:sanctum']);
 
 Route::apiResource('clients', ClientController::class)->middleware('auth:sanctum')->except(['show', 'update', 'destroy']);
 Route::get('clients/{uuid}', [ClientController::class,'show'])->middleware('auth:sanctum');

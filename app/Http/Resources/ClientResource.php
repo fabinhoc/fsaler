@@ -20,6 +20,7 @@ class ClientResource extends JsonResource
             'name' => $this->name,
             'phone_number' => $this->phone_number,
             'description' => $this->description,
+            'created_at' => $this->created_at,
         ];
     }
 }
